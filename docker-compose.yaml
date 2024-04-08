@@ -1,0 +1,25 @@
+version: "3"
+services:
+  database:
+    image: postgres:15.1-alpine
+    restart: always
+    ports:
+      - "5434:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=hFwI/MvZJJ[Y2WBq£1,(BN8\[-8Yu5^
+    volumes:
+      - elof_database:/var/lib/postgresql/data3
+    networks:
+      scavenger-hunt:
+        aliases:
+          - database
+  scavenger-hunt-api:
+    environment:
+      - DATABASE_URL=postgresql://postgres:hFwI/MvZJJ[Y2WBq£1,(BN8\[-8Yu5^@45.95.234.124:9856/scavenger_hunt
+
+volumes:
+  elof_database:
+
+networks:
+  scavenger-hunt:
