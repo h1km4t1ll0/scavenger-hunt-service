@@ -15,6 +15,9 @@ class Database:
         )
 
     def execute_query(self, query: Select):
-        return self.connection.execute(
+        rows = self.connection.execute(
             query
         ).fetchall()
+
+        self.connection.close()
+        return rows
