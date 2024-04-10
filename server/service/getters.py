@@ -1,11 +1,11 @@
 from sqlalchemy import select
 
-from server.service.database import Database
-from server.service.environment import env
+from service.database import Database
+from service.environment import environmental_variables
 
 
 def get_leaderboard():
-    database = Database(env.DATABASE_URL)
+    database = Database(environmental_variables.DATABASE_URL)
     table = database.get_table('team')
     results = database.execute_query(
         select(

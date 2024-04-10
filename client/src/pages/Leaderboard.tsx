@@ -2,7 +2,7 @@ import {
     useCallback, useEffect, useState,
 } from 'react';
 import {useApi} from "../providers/ApiProvider.ts";
-import {Skeleton, Space, Typography, Image, Col, Flex} from "antd";
+import {Skeleton, Space, Typography, Image, Col, Flex, Result} from "antd";
 import logo from '../assets/logo.jpg';
 
 export const LeaderboardPage = () => {
@@ -11,9 +11,16 @@ export const LeaderboardPage = () => {
         leaderboard,
         setLeaderboard
     ] = useState<[x: { team: string, points: number }] | null>(null);
-
+    const [err, setErr] = useState<boolean>(false);
     const load = useCallback(async () => {
         const leaderboardData = await api.getLeaderboard();
+
+        if (leaderboardData.code !== 200) {
+            setErr(true);
+            return;
+        }
+
+        setErr(false);
         setLeaderboard(leaderboardData.data);
     }, []);
 
@@ -32,6 +39,15 @@ export const LeaderboardPage = () => {
         };
     }, []);
 
+    if (err) {
+        return (
+            <Result
+                status="500"
+                title="500"
+                subTitle="Sorry, something went wrong."
+            />
+        );
+    }
     if (!leaderboard) {
         return (
             <Space direction="vertical" size="small">

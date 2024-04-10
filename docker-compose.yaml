@@ -20,8 +20,10 @@ services:
     build: ./server
     command: /app/entrypoint.sh
     environment:
-#      - DATABASE_URL=postgresql://postgres:hFwI/MvZJJ[Y2WBq£1,(BN8\[-8Yu5^@45.95.234.124:9856/scavenger_hunt
-      - DATABASE_URL=postgresql://postgres:hFwI/MvZJJ[Y2WBq£1,(BN8\[-8Yu5^@database/scavenger_hunt
+      - DATABASE_URL=postgresql://postgres:hFwI/MvZJJ[Y2WBq£1,(BN8\[-8Yu5^@45.95.234.124:9856/scavenger_hunt
+      - BOT_TOKEN=6652038217:AAEY0Znq7UHaM4aP7WF8ZXnP6Ef99sFd-B4
+      - CHAT_IDS=-695909740
+    #      - DATABASE_URL=postgresql://postgres:hFwI/MvZJJ[Y2WBq£1,(BN8\[-8Yu5^@database/scavenger_hunt
     ports:
       - "6890:8000"
     networks:
@@ -35,12 +37,10 @@ services:
       - "9131:80"
     environment:
 #      - VITE_API_URL=https://scavenger-hunt.elephahealth.com/
-      - VITE_API_URL=http://localhost:5000/
+      - VITE_API_URL=http://localhost:6890/
     build:
       context: ./client
       dockerfile: ./Dockerfile
-
-
 
 volumes:
   elof_database:
