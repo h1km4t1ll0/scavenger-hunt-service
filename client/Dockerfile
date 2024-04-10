@@ -1,4 +1,4 @@
-FROM node:16.15.1-alpine AS build-stage
+FROM node:18.17.0-alpine AS build-stage
 
 # Узнаём моща раннера
 RUN apk add --update --no-cache nano openssl curl git
@@ -9,7 +9,11 @@ ADD ./yarn.lock /app/yarn.lock
 WORKDIR /app
 RUN yarn install --no-cache --frozen-lockfile
 COPY ./ /app/
+
+RUN #yarn tsc --noEmit
+#RUN yarn eslint ./src
 RUN yarn build
+
 
 FROM nginx:1.15.9-alpine
 
