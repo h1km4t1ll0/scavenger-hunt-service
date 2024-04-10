@@ -15,7 +15,7 @@ export const LeaderboardPage = () => {
     const load = useCallback(async () => {
         const leaderboardData = await api.getLeaderboard();
 
-        if (leaderboardData.code !== 200) {
+        if (leaderboardData.code !== 200 || leaderboardData.data === null) {
             setErr(true);
             return;
         }
@@ -38,7 +38,6 @@ export const LeaderboardPage = () => {
             }
         };
     }, []);
-
     if (err) {
         return (
             <Result

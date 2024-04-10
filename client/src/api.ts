@@ -8,9 +8,12 @@ export class Api {
         this.url = url;
     }
 
-    public async getLeaderboard() {
+    public async getLeaderboard(): Promise<{
+        data: [x: { team: string, points: number }] | null,
+        code: number
+    }> {
         try {
-            const res =  await axios.get<{
+            const res = await axios.get<{
                 data: [x: { team: string, points: number }],
                 code: number
             }>(
@@ -18,13 +21,14 @@ export class Api {
             );
             return res.data;
         } catch (e) {
+            console.log(e)
             return new Promise<{
-                data: [x: { team: string, points: number }],
+                data: null,
                 code: number
             }>(
-                () => (
+                (resolve) => resolve(
                     {
-                        data: [],
+                        data: null,
                         code: 500
                     }
                 )
