@@ -62,6 +62,7 @@ async def start(message: Message, state: FSMContext):
     await state.finish()
     with get_db() as db:
         await send_answer(db, message.chat.id, "start")
+    db.close()
 
 
 @user_exists
@@ -69,6 +70,7 @@ async def cancel(message: Message, state: FSMContext):
     await state.finish()
     with get_db() as db:
         await send_answer(db, message.chat.id, "cancel")
+    db.close()
 
 
 @user_exists
@@ -76,6 +78,7 @@ async def info(message: Message, state: FSMContext):
     await state.finish()
     with get_db() as db:
         await send_answer(db, message.chat.id, "info")
+    db.close()
 
 
 @user_exists
@@ -83,6 +86,7 @@ async def support(message: Message, state: FSMContext):
     await state.finish()
     with get_db() as db:
         await send_answer(db, message.chat.id, "support")
+    db.close()
 
 
 @user_exists
@@ -90,6 +94,7 @@ async def send_map(message: Message, state: FSMContext):
     await state.finish()
     with get_db() as db:
         await send_answer(db, message.chat.id, "map")
+    db.close()
 
 
 @user_exists

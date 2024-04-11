@@ -118,6 +118,7 @@ async def online_tasks_message(query: CallbackQuery, state: FSMContext):
             replies["online_tasks_description"], parse_mode=ParseMode.HTML,
             reply_markup=online_tasks_kb(db, TeamManager().team_id(db, query.message.chat.id))
         )
+    db.close()
 
 
 async def offline_tasks_message(query: CallbackQuery, state: FSMContext):
@@ -126,6 +127,7 @@ async def offline_tasks_message(query: CallbackQuery, state: FSMContext):
             replies["offline_tasks_description"], parse_mode=ParseMode.HTML,
             reply_markup=offline_tasks_kb(db, TeamManager().team_id(db, query.message.chat.id))
         )
+    db.close()
 
 
 async def cosplay_tasks_message(query: CallbackQuery, state: FSMContext):
@@ -134,6 +136,7 @@ async def cosplay_tasks_message(query: CallbackQuery, state: FSMContext):
             replies["cosplay_tasks_description"], parse_mode=ParseMode.HTML,
             reply_markup=cosplay_tasks_kb(db, TeamManager().team_id(db, query.message.chat.id))
         )
+    db.close()
 
 
 async def secrets_tasks_message(query: CallbackQuery, state: FSMContext):
@@ -142,6 +145,7 @@ async def secrets_tasks_message(query: CallbackQuery, state: FSMContext):
             replies["secrets_tasks_description"], parse_mode=ParseMode.HTML,
             reply_markup=secrets_tasks_kb(db, TeamManager().team_id(db, query.message.chat.id))
         )
+    db.close()
 
 
 async def songs_tasks_message(query: CallbackQuery, state: FSMContext):
@@ -150,6 +154,7 @@ async def songs_tasks_message(query: CallbackQuery, state: FSMContext):
             replies["songs_tasks_description"], parse_mode=ParseMode.HTML,
             reply_markup=songs_tasks_kb(db, TeamManager().team_id(db, query.message.chat.id))
         )
+    db.close()
 
 
 async def rhymes_tasks_message(query: CallbackQuery, state: FSMContext):
@@ -158,6 +163,7 @@ async def rhymes_tasks_message(query: CallbackQuery, state: FSMContext):
             replies["rhymes_tasks_description"], parse_mode=ParseMode.HTML,
             reply_markup=rhymes_tasks_kb(db, TeamManager().team_id(db, query.message.chat.id))
         )
+    db.close()
 
 
 async def display_task(query: CallbackQuery, state: FSMContext):
@@ -165,10 +171,12 @@ async def display_task(query: CallbackQuery, state: FSMContext):
     with get_db() as db:
         task = TaskManager().get_task(db, task_id)
         if task.usage <= 0:
+            db.close()
             await query.message.edit_text("This task was solved too many times already...",
                                           reply_markup=back_kb(task.type))
             return
     new_text = f"❗ <b>{task.name}</b> ❗\n\n{task.description}\n<i>Maximum point(s): {task.amount}</i>"
+    db.close()
     if task.image is not None:
         new_photo = InputFile(get_settings().SRC_PREFIX + task.image)
         if task.with_manager:
@@ -197,6 +205,7 @@ async def solve_task_start(query: CallbackQuery, state: FSMContext):
     await state.update_data(task_name=task_name)
     with get_db() as db:
         await send_answer(db, query.message.chat.id, "solve_task_start")
+    db.close()
     await SolveStates.waiting_message.set()
 
 
@@ -224,6 +233,7 @@ async def solve_task_read_message(message: Message, state: FSMContext):
             manager_text = f"New solution!\n\nTask: {task.name}\nTeam: {team.name}"
         if task.manager_id is None:
             await state.finish()
+            db.close()
             return await message.answer("This task has no manager, use /support")
         bot: Bot = BotHolder().bot
         try:
@@ -232,9 +242,11 @@ async def solve_task_read_message(message: Message, state: FSMContext):
             task.usage -= 1
             db.commit()
         except:
+            db.close()
             return await message.answer("Some troubles while resending was acquired, use /support")
         finally:
             await state.finish()
+            db.close()
         return await send_answer(db, message.chat.id, "solution_sent")
 
 
@@ -272,6 +284,7 @@ async def flag_start(message: Message, state: FSMContext):
     await state.finish()
     with get_db() as db:
         await send_answer(db, message.chat.id, "send_flag")
+    db.close()
     await FlagStates.waiting_flag.set()
 
 
@@ -296,9 +309,11 @@ async def flag_flag(message: Message, state: FSMContext):
             await send_answer(db, message.chat.id, "task_usage_exceeded")
         elif result == TaskActionResult.USED_FLAG:
             await send_answer(db, message.chat.id, "used_flag")
+    db.close()
 
 
 async def send_map(query: CallbackQuery, state: FSMContext):
     await state.finish()
     with get_db() as db:
         await send_answer(db, query.message.chat.id, "map")
+    db.close()

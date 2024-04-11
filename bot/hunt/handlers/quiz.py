@@ -157,6 +157,7 @@ async def quiz_start_check(query: CallbackQuery, state: FSMContext):
         solved_quiz = SolvedQuiz(team_id=team.id)
         db.add(solved_quiz)
         db.commit()
+        db.close()
     await state.update_data(quiz_start=datetime.now(), question_number=0)
     await quiz_next_step(query, state)
 
@@ -192,6 +193,7 @@ async def quiz_end(query: CallbackQuery, state: FSMContext):
         team.amount += int(score / 3)
         text_prefix = text_prefix + f"You've got {int(score / 3)} points for correct answers!\n"
         db.commit()
+        db.close()
 
     if score >= 3:
         with get_db() as db:
@@ -207,6 +209,7 @@ async def quiz_end(query: CallbackQuery, state: FSMContext):
                 text_prefix += "You earned 2 additional points, because you were very fast!"
                 team.amount += 2
             db.commit()
+            db.close()
 
     await query.message.edit_text(text_prefix)
     await query.message.edit_reply_markup(solved_quiz_kb)

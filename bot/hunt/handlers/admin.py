@@ -138,6 +138,7 @@ async def admin_token(message: Message, state: FSMContext):
             return await message.answer("Токен - инвалид!")
         db_user.role = "admin"
         db.commit()
+    db.close()
     await message.answer("Теперь ты админ")
     await state.finish()
 
@@ -282,6 +283,7 @@ async def remove_task(message: Message, state: FSMContext):
 
         db.delete(db_task)
         db.commit()
+    db.close()
     await state.finish()
     await message.answer(f"Таска {name} удалена")
 
@@ -292,6 +294,7 @@ async def get_tasks(message: Message, state: FSMContext):
     await state.finish()
     with get_db() as db:
         db_tasks: [Task] = db.query(Task).all()
+    db.close()
     bot: Bot = BotHolder().bot
     for task in db_tasks:
         ans = f"Имя: {task.name}\nОписание:\n{task.description}\nЦена: {task.amount}\nФлаг: {task.flag}\nКол-во использований: {task.usage}"
@@ -315,6 +318,7 @@ async def get_teams(message: Message, state: FSMContext):
             for user in users:
                 text += f"@{user.username} "
             text += "\n\n"
+    db.close()
     await message.answer(text)
 
 
@@ -334,6 +338,7 @@ async def give_money_start(message: Message, state: FSMContext):
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
     for team in teams:
         kb.add(KeyboardButton(team.name))
+    db.close()
     await message.answer("Choose team to give money", reply_markup=kb)
     await GiveMoneyState.waiting_team.set()
 
@@ -349,6 +354,7 @@ async def give_money_read_team(message: Message, state: FSMContext):
     for task in tasks:
         kb.add(KeyboardButton(task.name))
 
+    db.close()
     await message.answer(
         "Choose task", reply_markup=kb
     )
@@ -416,6 +422,7 @@ async def give_money_read_amount(message: Message, state: FSMContext):
         await bot.edit_message_text(f"{solution_message_text}\nGiven: {amount}", message.chat.id, solution_message_id)
         await bot.edit_message_reply_markup(message.chat.id, solution_message_id,
                                             reply_markup=manager_checked_kb(team_name, task_name))
+    db.close()
     await message.answer(f"{amount} points was given to {team_name}")
     await state.finish()
 
@@ -434,6 +441,7 @@ async def change_visibility_start(message: Message, state: FSMContext):
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
     for team in teams:
         kb.add(KeyboardButton(team.name))
+    db.close()
     await message.answer("Choose team to change visibility", reply_markup=kb)
     await ChangeVisibleStates.waiting_team_name.set()
 
@@ -449,6 +457,7 @@ async def change_visibility_read_team(message: Message, state: FSMContext):
         else:
             team.visible = True
         db.commit()
+    db.close()
     await state.finish()
     await message.answer("Changed")
 
@@ -528,6 +537,7 @@ async def mailing_all_confirm(message: Message, state: FSMContext):
                     print(f"{i} | {user.username} | {user.full_name}")
                 except:
                     pass
+        db.close()
         await message.answer("Completed", reply_markup=ReplyKeyboardRemove())
     else:
         await message.answer("Canceled", reply_markup=ReplyKeyboardRemove())
@@ -550,6 +560,7 @@ async def mailing_team_start(message: Message, state: FSMContext):
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
     for team in teams:
         kb.add(KeyboardButton(team.name))
+    db.close()
     await message.answer("Choose team to send message", reply_markup=kb)
     await MailingTeamStates.waiting_team_name.set()
 
@@ -580,6 +591,7 @@ async def mailing_team_read_text(message: Message, state: FSMContext):
                 await state.update_data(text=f"Manager of the task {task.name} sent you this message:\n\n{text}")
             else:
                 await state.update_data(text=text)
+        db.close()
     else:
         await state.update_data(text=text)
     kb = ReplyKeyboardMarkup().add(KeyboardButton("yes")).add(KeyboardButton("no"))
@@ -598,6 +610,7 @@ async def mailing_team_confirm(message: Message, state: FSMContext):
         bot = BotHolder().bot
         text = (await state.get_data()).get("text", "Empty text")
         users = users if users is not None else []
+        db.close()
         for user in users:
             try:
                 await bot.send_message(user.chat_id, text, parse_mode=ParseMode.HTML)
@@ -619,6 +632,7 @@ async def get_users(message: Message, state: FSMContext):
     ans = ""
     for user in users:
         ans += f"{user.url} | @{user.username} | {user.role}\n"
+    db.close()
     await message.answer(ans)
 
 
@@ -636,7 +650,7 @@ async def manager_start(message: Message, state: FSMContext):
     kb = ReplyKeyboardMarkup(resize_keyboard=True)
     for task in tasks:
         kb.add(KeyboardButton(task.name))
-
+    db.close()
     await message.answer(
         "Choose task to become manager of", reply_markup=kb
     )
@@ -659,6 +673,7 @@ async def manager_read_task(message: Message, state: FSMContext):
         db.commit()
         db.refresh(task)
         await notify_admins(db, f"Now {user.line_info} is the manager of the task {task.name}")
+    db.close()
     await state.finish()
     return await message.answer(f"Now you are manager of the {task.name} task")
 
@@ -685,7 +700,7 @@ async def get_invite_tokens(message: Message, state: FSMContext):
         teams.sort(key=lambda t: t.name)
         for team in teams:
             text += f"{hbold(team.name)}: {hspoiler(team.token)}\n"
-
+    db.close()
     await message.answer(text, parse_mode=ParseMode.HTML)
 
 

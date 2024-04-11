@@ -21,6 +21,7 @@ def user_exists(func):
                 db.add(db_user)
                 db.commit()
                 db.refresh(db_user)
+            db.close()
 
         return await func(message, state)
 

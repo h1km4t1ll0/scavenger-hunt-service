@@ -88,6 +88,7 @@ async def create_team_start(message: Message, state: FSMContext):
         #     return await send_answer(db, message.chat.id, "create_team_already_in_team")
         await send_answer(db, message.chat.id, "create_team_start")
     await CreateTeamStates.waiting_name.set()
+    db.close()
 
 
 async def create_team_read_name(message: Message, state: FSMContext):
@@ -104,6 +105,7 @@ async def create_team_read_name(message: Message, state: FSMContext):
             return await message.answer(
                 f"<span class='tg-spoiler'>{token}</span>", parse_mode=ParseMode.HTML
             )
+        db.close()
 
 
 class JoinTeamStates(StatesGroup):
@@ -117,6 +119,7 @@ async def join_team_start(message: Message, state: FSMContext):
         if TeamManager().check_user_in_team(db, message.chat.id):
             return await send_answer(db, message.chat.id, "join_team_already_in_team")
         await send_answer(db, message.chat.id, "join_team_start")
+        db.close()
     await JoinTeamStates.waiting_token.set()
 
 
@@ -133,6 +136,7 @@ async def join_team_read_token(message: Message, state: FSMContext):
             return await send_answer(db, message.chat.id, "join_team_full_team")
         elif result == TeamOperationResult.JOINED:
             return await send_answer(db, message.chat.id, "join_team_joined")
+        db.close()
 
 
 @user_exists
@@ -144,6 +148,7 @@ async def leave_team(message: Message, state: FSMContext):
             return await send_answer(db, message.chat.id, "leave_team_not_in_team")
         if result == TeamOperationResult.LEFT:
             return await send_answer(db, message.chat.id, "leave_team_left")
+        db.close()
 
 
 @user_exists
@@ -153,6 +158,7 @@ async def team_info(message: Message, state: FSMContext):
     with get_db() as db:
         team: Team = TeamManager().team(db, message.chat.id)
         users: list[User] = User.get_all(db, team_id=team.id)
+        db.close()
     info = (
         f"❗ <b>{team.name}</b> ❗\n"
         f"💰 You have <i>{team.amount} points</i>\n\n"
@@ -167,6 +173,7 @@ async def leaderboard(message: Message, state: FSMContext):
     await state.finish()
     with get_db() as db:
         teams: list[Team] = db.query(Team).all()
+        db.close()
     teams = teams if teams is not None else []
     teams.sort()
     teams.reverse()

@@ -37,6 +37,7 @@ def build_results():
             # cur_result["Quiz"] = SolvedQuiz.query(team_id=team.id)['points']
             results.append(cur_result)
             cur_result = {}
+    db.close()
     results.sort(key=lambda x: x['Score'], reverse=True)
     res_name = str(datetime.now().strftime("Results %H-%M %d.%m"))
     with open(f"./results/{res_name}.json", "w") as f:
