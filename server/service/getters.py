@@ -13,5 +13,6 @@ def get_leaderboard():
             table.columns.amount
         )
     )
+    database.connection.close()
 
     return [{'team': row[0], 'points': row[1]} for row in results]

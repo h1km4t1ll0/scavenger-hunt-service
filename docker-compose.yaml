@@ -8,6 +8,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=hFwI/MvZJJ[Y2WBq£1,(BN8\[-8Yu5^
+      - POSTGRES_MAX_CONNECTIONS=200
     volumes:
       - elof_database:/var/lib/postgresql/data3
     networks:
