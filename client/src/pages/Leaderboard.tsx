@@ -21,7 +21,7 @@ export const LeaderboardPage = () => {
         }
 
 
-        leaderboardData.sort(
+        leaderboardData.data.sort(
             (a: { team: string, points: number }, b: { team: string, points: number }) => b.points - a.points
         );
         setErr(false);
