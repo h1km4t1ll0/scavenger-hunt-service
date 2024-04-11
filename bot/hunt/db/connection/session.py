@@ -32,9 +32,12 @@ class SessionManager:
         )
 
 
+session_manager = SessionManager()
+
+
 @contextmanager
 def get_db() -> Session:
-    database = SessionManager().get_session()
+    database = session_manager.get_session()
     try:
         yield database
     finally:
