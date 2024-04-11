@@ -21,7 +21,6 @@ async def notify_team(db: Session, chat_id: int, text: str):
 async def notify_team_by_id(db: Session, team_id: int, text: str):
     bot = BotHolder().bot
     users: list[User] = User.get_all(db, team_id=team_id)
-    db.close()
     for user in users:
         try:
             await bot.send_message(user.chat_id, text, parse_mode=ParseMode.HTML)

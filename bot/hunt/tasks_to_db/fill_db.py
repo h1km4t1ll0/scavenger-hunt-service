@@ -28,7 +28,6 @@ def fill_database():
                 except sqlalchemy.exc.IntegrityError as e:
                     db.rollback()
                     print(f'Task with flag {task["flag"]} already exists, skipped')
-        db.close()
         print()
 
         print("CREATING OFFLINE TASKS:")
@@ -44,7 +43,6 @@ def fill_database():
                 except sqlalchemy.exc.IntegrityError as e:
                     db.rollback()
                     print(f'Task with flag {task["flag"]} already exists, skipped')
-        db.close()
         print()
 
         print("CREATING COSPLAY TASKS:")
@@ -60,7 +58,6 @@ def fill_database():
                 except sqlalchemy.exc.IntegrityError as e:
                     db.rollback()
                     print(f'Task with flag {task["flag"]} already exists, skipped')
-        db.close()
         print()
 
         print("CREATING SECRET TASKS:")
@@ -76,7 +73,6 @@ def fill_database():
                 except sqlalchemy.exc.IntegrityError as e:
                     db.rollback()
                     print(f'Task with flag {task["flag"]} already exists, skipped')
-        db.close()
         print()
 
         print("CREATING SONG SUMMARIZATION TASKS:")
@@ -92,7 +88,6 @@ def fill_database():
                 except sqlalchemy.exc.IntegrityError as e:
                     db.rollback()
                     print(f'Task with flag {task["flag"]} already exists, skipped')
-        db.close()
         print()
 
         print("CREATING RHYMES TASKS:")
@@ -108,7 +103,6 @@ def fill_database():
                 except sqlalchemy.exc.IntegrityError as e:
                     db.rollback()
                     print(f'Task with flag {task["flag"]} already exists, skipped')
-        db.close()
         print()
 
 

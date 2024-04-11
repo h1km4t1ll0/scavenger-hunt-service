@@ -13,7 +13,6 @@ def user_in_team(func):
             with get_db() as db:
                 db_user: User = db.query(User).where(User.chat_id == message.chat.id).first()
                 exists = db_user is not None
-                db.close()
                 if not exists:
                     return await send_answer(db, message.chat.id, "no_team_action")
                 if db_user.team_id is None:

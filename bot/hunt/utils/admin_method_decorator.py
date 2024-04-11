@@ -17,7 +17,6 @@ def admin_method(func):
                 return
             if db_user.role != "admin":
                 return
-            db.close()
 
         return await func(message, state)
 
