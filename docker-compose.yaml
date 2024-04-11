@@ -1,5 +1,34 @@
 version: "3"
 services:
+  pgbouncer:
+    image: edoburu/pgbouncer
+    restart: always
+    environment:
+#      AUTH_TYPE: md5
+#      USERS: 'postgres=hFwI/MvZJJ[Y2WBq£1,(BN8\[-8Yu5^'
+#      DB_USER: postgres
+#      DB_PASSWORD: hFwI/MvZJJ[Y2WBq£1,(BN8\[-8Yu5^
+#      DB_HOST: database-scavenger-hunt-real
+#      DB_PORT: 5432
+#      ADMIN_USERS: postgres
+#      DB_NAME: postgres
+#      MAX_CLIENT_CONN: 100
+#      DEFAULT_POOL_SIZE: 20
+      - DB_NAME=postgres
+      # for postgres:14 and above
+      - AUTH_TYPE=scram-sha-256 
+      - POOL_MODE=transaction
+      - ADMIN_USERS=postgres,dbuser
+      - DB_USER=postgres
+      - DB_PASSWORD=hFwI/MvZJJ[Y2WBq£1,(BN8\[-8Yu5^
+      - DB_HOST=database-scavenger-hunt-real
+    ports:
+      - "6432:6432"
+    networks:
+      scavenger-hunt:
+        aliases:
+          - database-scavenger-hunt
+
   database:
     image: postgres:15.1-alpine
     restart: always
@@ -8,13 +37,13 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=hFwI/MvZJJ[Y2WBq£1,(BN8\[-8Yu5^
-      - POSTGRES_MAX_CONNECTIONS=200
+      - POSTGRES_MAX_CONNECTIONS=1000
     volumes:
       - elof_database:/var/lib/postgresql/data3
     networks:
       scavenger-hunt:
         aliases:
-          - database-scavenger-hunt
+          - database-scavenger-hunt-real
 
   web:
     restart: always
