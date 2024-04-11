@@ -22,6 +22,8 @@ services:
       - DB_USER=postgres
       - DB_PASSWORD=hFwI/MvZJJ[Y2WBq£1,(BN8\[-8Yu5^
       - DB_HOST=database-scavenger-hunt-real
+      - PGBOUNCER_MAX_CLIENT_CONN=200
+      - DEFAULT_POOL_SIZE=50
     ports:
       - "6432:6432"
     networks:

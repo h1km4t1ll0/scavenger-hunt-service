@@ -173,7 +173,7 @@ async def leaderboard(message: Message, state: FSMContext):
     await state.finish()
     with get_db() as db:
         teams: list[Team] = db.query(Team).all()
-        db.close()
+    db.close()
     teams = teams if teams is not None else []
     teams.sort()
     teams.reverse()
