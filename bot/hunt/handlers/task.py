@@ -113,176 +113,129 @@ async def get_task_type_message(message: Message, state: FSMContext):
 
 
 async def online_tasks_message(query: CallbackQuery, state: FSMContext):
-    try:
-        with get_db() as db:
-            await query.message.edit_text(
-                replies["online_tasks_description"], parse_mode=ParseMode.HTML,
-                reply_markup=online_tasks_kb(db, TeamManager().team_id(db, query.message.chat.id))
-            )
-        db.close()
-    except Exception as e:
-        print(e)
-        db.close()
+    with get_db() as db:
+        await query.message.edit_text(
+            replies["online_tasks_description"], parse_mode=ParseMode.HTML,
+            reply_markup=online_tasks_kb(db, TeamManager().team_id(db, query.message.chat.id))
+        )
 
 
 async def offline_tasks_message(query: CallbackQuery, state: FSMContext):
-    try:
-        with get_db() as db:
-            await query.message.edit_text(
-                replies["offline_tasks_description"], parse_mode=ParseMode.HTML,
-                reply_markup=offline_tasks_kb(db, TeamManager().team_id(db, query.message.chat.id))
-            )
-        db.close()
-    except Exception as e:
-        print(e)
-        db.close()
+    with get_db() as db:
+        await query.message.edit_text(
+            replies["offline_tasks_description"], parse_mode=ParseMode.HTML,
+            reply_markup=offline_tasks_kb(db, TeamManager().team_id(db, query.message.chat.id))
+        )
 
 
 async def cosplay_tasks_message(query: CallbackQuery, state: FSMContext):
-    try:
-        with get_db() as db:
-            await query.message.edit_text(
-                replies["cosplay_tasks_description"], parse_mode=ParseMode.HTML,
-                reply_markup=cosplay_tasks_kb(db, TeamManager().team_id(db, query.message.chat.id))
-            )
-        db.close()
-    except Exception as e:
-        print(e)
-        db.close()
+    with get_db() as db:
+        await query.message.edit_text(
+            replies["cosplay_tasks_description"], parse_mode=ParseMode.HTML,
+            reply_markup=cosplay_tasks_kb(db, TeamManager().team_id(db, query.message.chat.id))
+        )
 
 
 async def secrets_tasks_message(query: CallbackQuery, state: FSMContext):
-    try:
-        with get_db() as db:
-            await query.message.edit_text(
-                replies["secrets_tasks_description"], parse_mode=ParseMode.HTML,
-                reply_markup=secrets_tasks_kb(db, TeamManager().team_id(db, query.message.chat.id))
-            )
-        db.close()
-    except Exception as e:
-        print(e)
-        db.close()
+    with get_db() as db:
+        await query.message.edit_text(
+            replies["secrets_tasks_description"], parse_mode=ParseMode.HTML,
+            reply_markup=secrets_tasks_kb(db, TeamManager().team_id(db, query.message.chat.id))
+        )
 
 
 async def songs_tasks_message(query: CallbackQuery, state: FSMContext):
-    try:
-        with get_db() as db:
-            await query.message.edit_text(
-                replies["songs_tasks_description"], parse_mode=ParseMode.HTML,
-                reply_markup=songs_tasks_kb(db, TeamManager().team_id(db, query.message.chat.id))
-            )
-        db.close()
-    except Exception as e:
-        print(e)
-        db.close()
+    with get_db() as db:
+        await query.message.edit_text(
+            replies["songs_tasks_description"], parse_mode=ParseMode.HTML,
+            reply_markup=songs_tasks_kb(db, TeamManager().team_id(db, query.message.chat.id))
+        )
 
 
 async def rhymes_tasks_message(query: CallbackQuery, state: FSMContext):
-    try:
-        with get_db() as db:
-            await query.message.edit_text(
-                replies["rhymes_tasks_description"], parse_mode=ParseMode.HTML,
-                reply_markup=rhymes_tasks_kb(db, TeamManager().team_id(db, query.message.chat.id))
-            )
-        db.close()
-    except Exception as e:
-        print(e)
-        db.close()
+    with get_db() as db:
+        await query.message.edit_text(
+            replies["rhymes_tasks_description"], parse_mode=ParseMode.HTML,
+            reply_markup=rhymes_tasks_kb(db, TeamManager().team_id(db, query.message.chat.id))
+        )
 
 
 async def display_task(query: CallbackQuery, state: FSMContext):
-    try:
-        task_id = query.data.split("_")[-1]
-        with get_db() as db:
-            task = TaskManager().get_task(db, task_id)
-            if task.usage <= 0:
-                db.close()
-                await query.message.edit_text("This task was solved too many times already...",
-                                              reply_markup=back_kb(task.type))
-                return
-        new_text = f"❗ <b>{task.name}</b> ❗\n\n{task.description}\n<i>Maximum point(s): {task.amount}</i>"
-        db.close()
-        if task.image is not None:
-            new_photo = InputFile(get_settings().SRC_PREFIX + task.image)
-            if task.with_manager:
-                new_kb = manager_close_kb(task.name)
-            else:
-                new_kb = close_kb
-            await query.message.answer_photo(
-                new_photo, caption=new_text, parse_mode=ParseMode.HTML, reply_markup=new_kb
-            )
+    task_id = query.data.split("_")[-1]
+    with get_db() as db:
+        task = TaskManager().get_task(db, task_id)
+        if task.usage <= 0:
+            await query.message.edit_text("This task was solved too many times already...",
+                                          reply_markup=back_kb(task.type))
+            return
+    new_text = f"❗ <b>{task.name}</b> ❗\n\n{task.description}\n<i>Maximum point(s): {task.amount}</i>"
+    if task.image is not None:
+        new_photo = InputFile(get_settings().SRC_PREFIX + task.image)
+        if task.with_manager:
+            new_kb = manager_close_kb(task.name)
         else:
-            if task.with_manager:
-                new_kb = manager_back_kb(task.name, task.type)
-            else:
-                new_kb = back_kb(task.type)
-            await query.message.edit_text(
-                new_text, parse_mode=ParseMode.HTML, reply_markup=new_kb
-            )
-    except Exception as e:
-        print(e)
-        db.close()
+            new_kb = close_kb
+        await query.message.answer_photo(
+            new_photo, caption=new_text, parse_mode=ParseMode.HTML, reply_markup=new_kb
+        )
+    else:
+        if task.with_manager:
+            new_kb = manager_back_kb(task.name, task.type)
+        else:
+            new_kb = back_kb(task.type)
+        await query.message.edit_text(
+            new_text, parse_mode=ParseMode.HTML, reply_markup=new_kb
+        )
+
 
 class SolveStates(StatesGroup):
     waiting_message = State()
 
 
 async def solve_task_start(query: CallbackQuery, state: FSMContext):
-    try:
-        task_name = query.data.split("_")[-1]
-        await state.update_data(task_name=task_name)
-        with get_db() as db:
-            await send_answer(db, query.message.chat.id, "solve_task_start")
-        db.close()
-        await SolveStates.waiting_message.set()
-    except Exception as e:
-        print(e)
-        db.close()
+    task_name = query.data.split("_")[-1]
+    await state.update_data(task_name=task_name)
+    with get_db() as db:
+        await send_answer(db, query.message.chat.id, "solve_task_start")
+    await SolveStates.waiting_message.set()
 
 
 @user_in_team
 async def solve_task_read_message(message: Message, state: FSMContext):
-    try:
-        with get_db() as db:
-            task_name = (await state.get_data()).get("task_name", "empty")
-            task: Task = db.query(Task).where(Task.name == task_name).first()
-            if task is None:
-                await state.finish()
-                return await message.answer("Some troubles with task, use /support")
-            if not task.with_manager:
-                await state.finish()
-                return await message.answer("This task has no manager")
+    with get_db() as db:
+        task_name = (await state.get_data()).get("task_name", "empty")
+        task: Task = db.query(Task).where(Task.name == task_name).first()
+        if task is None:
+            await state.finish()
+            return await message.answer("Some troubles with task, use /support")
+        if not task.with_manager:
+            await state.finish()
+            return await message.answer("This task has no manager")
 
-            user: User = db.query(User).where(User.chat_id == message.chat.id).first()
-            team: Team = db.query(Team).where(Team.id == user.team_id).first()
-            solved = TaskManager().check_task_solved(db, task.id, team.id)
-            if solved:
-                manager_text = f"New solution!\n\nTask: {task.name}\nTeam: {team.name}\n" \
-                               f"Comment: This team has already solved this task " \
-                               f"(they have already somehow received some amount of points), check your history " \
-                               f"and then make a decision (you can answer them, give points or do nothing)"
-            else:
-                manager_text = f"New solution!\n\nTask: {task.name}\nTeam: {team.name}"
-            if task.manager_id is None:
-                await state.finish()
-                db.close()
-                return await message.answer("This task has no manager, use /support")
-            bot: Bot = BotHolder().bot
-            try:
-                await message.forward(task.manager_id)
-                await bot.send_message(task.manager_id, manager_text, reply_markup=manager_check_kb(team.name, task.name))
-                task.usage -= 1
-                db.commit()
-            except:
-                db.close()
-                return await message.answer("Some troubles while resending was acquired, use /support")
-            finally:
-                await state.finish()
-                db.close()
-            return await send_answer(db, message.chat.id, "solution_sent")
-    except Exception as e:
-        print(e)
-        db.close()
+        user: User = db.query(User).where(User.chat_id == message.chat.id).first()
+        team: Team = db.query(Team).where(Team.id == user.team_id).first()
+        solved = TaskManager().check_task_solved(db, task.id, team.id)
+        if solved:
+            manager_text = f"New solution!\n\nTask: {task.name}\nTeam: {team.name}\n" \
+                           f"Comment: This team has already solved this task " \
+                           f"(they have already somehow received some amount of points), check your history " \
+                           f"and then make a decision (you can answer them, give points or do nothing)"
+        else:
+            manager_text = f"New solution!\n\nTask: {task.name}\nTeam: {team.name}"
+        if task.manager_id is None:
+            await state.finish()
+            return await message.answer("This task has no manager, use /support")
+        bot: Bot = BotHolder().bot
+        try:
+            await message.forward(task.manager_id)
+            await bot.send_message(task.manager_id, manager_text, reply_markup=manager_check_kb(team.name, task.name))
+            task.usage -= 1
+            db.commit()
+        except:
+            return await message.answer("Some troubles while resending was acquired, use /support")
+        finally:
+            await state.finish()
+        return await send_answer(db, message.chat.id, "solution_sent")
 
 
 async def menu(query: CallbackQuery, state: FSMContext):
@@ -316,51 +269,36 @@ class FlagStates(StatesGroup):
 @user_exists
 @user_in_team
 async def flag_start(message: Message, state: FSMContext):
-    try:
-        await state.finish()
-        with get_db() as db:
-            await send_answer(db, message.chat.id, "send_flag")
-        db.close()
-        await FlagStates.waiting_flag.set()
-    except Exception as e:
-        print(e)
-        db.close()
+    await state.finish()
+    with get_db() as db:
+        await send_answer(db, message.chat.id, "send_flag")
+    await FlagStates.waiting_flag.set()
 
 
 async def flag_flag(message: Message, state: FSMContext):
-    try:
-        flag = message.text.upper()
-        await state.finish()
-        with get_db() as db:
-            result, amount = await TaskManager().solve_task(db, flag, message.chat.id)
-            if result == TaskActionResult.OK_FLAG:
-                await notify_team(
-                    db, message.chat.id, f"Congrats! Your team just earned <b>{amount} point(s)!</b> 🤑"
-                )
-            elif result == TaskActionResult.INVALID_FLAG:
-                await send_answer(db, message.chat.id, "invalid_flag")
-            elif result == TaskActionResult.NEGATIVE_FLAG:
-                await notify_team(
-                    db,
-                    message.chat.id,
-                    f"Oh... You team just <b>LOST {abs(amount)} point(s)!</b> 😓",
-                )
-            elif result == TaskActionResult.MAXIMUM_USAGE_EXCEEDED:
-                await send_answer(db, message.chat.id, "task_usage_exceeded")
-            elif result == TaskActionResult.USED_FLAG:
-                await send_answer(db, message.chat.id, "used_flag")
-        db.close()
-    except Exception as e:
-        print(e)
-        db.close()
+    flag = message.text.upper()
+    await state.finish()
+    with get_db() as db:
+        result, amount = await TaskManager().solve_task(db, flag, message.chat.id)
+        if result == TaskActionResult.OK_FLAG:
+            await notify_team(
+                db, message.chat.id, f"Congrats! Your team just earned <b>{amount} point(s)!</b> 🤑"
+            )
+        elif result == TaskActionResult.INVALID_FLAG:
+            await send_answer(db, message.chat.id, "invalid_flag")
+        elif result == TaskActionResult.NEGATIVE_FLAG:
+            await notify_team(
+                db,
+                message.chat.id,
+                f"Oh... You team just <b>LOST {abs(amount)} point(s)!</b> 😓",
+            )
+        elif result == TaskActionResult.MAXIMUM_USAGE_EXCEEDED:
+            await send_answer(db, message.chat.id, "task_usage_exceeded")
+        elif result == TaskActionResult.USED_FLAG:
+            await send_answer(db, message.chat.id, "used_flag")
 
 
 async def send_map(query: CallbackQuery, state: FSMContext):
-    try:
-        await state.finish()
-        with get_db() as db:
-            await send_answer(db, query.message.chat.id, "map")
-        db.close()
-    except Exception as e:
-        print(e)
-        db.close()
+    await state.finish()
+    with get_db() as db:
+        await send_answer(db, query.message.chat.id, "map")

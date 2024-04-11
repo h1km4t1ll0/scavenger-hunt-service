@@ -146,82 +146,68 @@ async def quiz_info_from_btn(query: CallbackQuery, state: FSMContext):
 
 
 async def quiz_start_check(query: CallbackQuery, state: FSMContext):
-    try:
-        await state.finish()
-        with get_db() as db:
-            user: User = db.query(User).where(User.chat_id == query.message.chat.id).first()
-            team: Team = db.query(Team).where(Team.id == user.team_id).first()
-            solved_quiz: SolvedQuiz = db.query(SolvedQuiz).where(SolvedQuiz.team_id == team.id).first()
-            if solved_quiz is not None:
-                return await query.answer("Sorry, your team had already tried this Quiz, you have no more attempts")
+    await state.finish()
+    with get_db() as db:
+        user: User = db.query(User).where(User.chat_id == query.message.chat.id).first()
+        team: Team = db.query(Team).where(Team.id == user.team_id).first()
+        solved_quiz: SolvedQuiz = db.query(SolvedQuiz).where(SolvedQuiz.team_id == team.id).first()
+        if solved_quiz is not None:
+            return await query.answer("Sorry, your team had already tried this Quiz, you have no more attempts")
 
-            solved_quiz = SolvedQuiz(team_id=team.id)
-            db.add(solved_quiz)
-            db.commit()
-        db.close()
-        await state.update_data(quiz_start=datetime.now(), question_number=0)
-        await quiz_next_step(query, state)
-    except Exception as e:
-        print(e)
-        db.close()
+        solved_quiz = SolvedQuiz(team_id=team.id)
+        db.add(solved_quiz)
+        db.commit()
+    await state.update_data(quiz_start=datetime.now(), question_number=0)
+    await quiz_next_step(query, state)
 
 
 async def quiz_next_step(query: CallbackQuery, state: FSMContext):
-    try:
-        question_number = (await state.get_data()).get("question_number", 0)
-        if 0 < question_number < 10:
-            cur_answers = (await state.get_data()).get("quiz_answers", "")
-            await state.update_data(quiz_answers=f"{cur_answers}{query.data.split('_')[-1]}")
-        if question_number == 10:
-            cur_answers = (await state.get_data()).get("quiz_answers", "")
-            await state.update_data(quiz_answers=f"{cur_answers}{query.data.split('_')[-1]}")
-            return await quiz_end(query, state)
-        await query.message.edit_text(questions[question_number])
-        await query.message.edit_reply_markup(answer_kb)
-        await state.update_data(question_number=question_number + 1)
-    except Exception as e:
-        print(e)
+    question_number = (await state.get_data()).get("question_number", 0)
+    if 0 < question_number < 10:
+        cur_answers = (await state.get_data()).get("quiz_answers", "")
+        await state.update_data(quiz_answers=f"{cur_answers}{query.data.split('_')[-1]}")
+    if question_number == 10:
+        cur_answers = (await state.get_data()).get("quiz_answers", "")
+        await state.update_data(quiz_answers=f"{cur_answers}{query.data.split('_')[-1]}")
+        return await quiz_end(query, state)
+    await query.message.edit_text(questions[question_number])
+    await query.message.edit_reply_markup(answer_kb)
+    await state.update_data(question_number=question_number + 1)
 
 
 async def quiz_end(query: CallbackQuery, state: FSMContext):
-    try:
-        data = await state.get_data()
-        quiz_answers = data.get("quiz_answers", "bababbaaab")
-        score = 0
-        for i, quiz_answer in enumerate(quiz_answers):
-            if quiz_answer == correct_answers[i]:
-                score += 1
-        time_spent = datetime.now() - data.get('quiz_start', datetime.now() - timedelta(minutes=5))
-        text_prefix = f"Congrats! Your results:\n" \
-                      f"Time - {time_spent.seconds} seconds\n" \
-                      f"Correct answers - {score}/{len(questions)}\n\n"
+    data = await state.get_data()
+    quiz_answers = data.get("quiz_answers", "bababbaaab")
+    score = 0
+    for i, quiz_answer in enumerate(quiz_answers):
+        if quiz_answer == correct_answers[i]:
+            score += 1
+    time_spent = datetime.now() - data.get('quiz_start', datetime.now() - timedelta(minutes=5))
+    text_prefix = f"Congrats! Your results:\n" \
+                  f"Time - {time_spent.seconds} seconds\n" \
+                  f"Correct answers - {score}/{len(questions)}\n\n"
+    with get_db() as db:
+        user: User = db.query(User).where(User.chat_id == query.message.chat.id).first()
+        team: Team = db.query(Team).where(Team.id == user.team_id).first()
+        team.amount += int(score / 3)
+        text_prefix = text_prefix + f"You've got {int(score / 3)} points for correct answers!\n"
+        db.commit()
+
+    if score >= 3:
         with get_db() as db:
             user: User = db.query(User).where(User.chat_id == query.message.chat.id).first()
             team: Team = db.query(Team).where(Team.id == user.team_id).first()
-            team.amount += int(score / 3)
-            text_prefix = text_prefix + f"You've got {int(score / 3)} points for correct answers!\n"
+
+            if time_spent.seconds > 120:
+                text_prefix += "Sorry, but you have spent too much time to get additional points..."
+            elif time_spent.seconds > 60:
+                text_prefix += "You earned 1 additional point, because you were fast!"
+                team.amount += 1
+            else:
+                text_prefix += "You earned 2 additional points, because you were very fast!"
+                team.amount += 2
             db.commit()
-        db.close()
 
-        if score >= 3:
-            with get_db() as db:
-                user: User = db.query(User).where(User.chat_id == query.message.chat.id).first()
-                team: Team = db.query(Team).where(Team.id == user.team_id).first()
-
-                if time_spent.seconds > 120:
-                    text_prefix += "Sorry, but you have spent too much time to get additional points..."
-                elif time_spent.seconds > 60:
-                    text_prefix += "You earned 1 additional point, because you were fast!"
-                    team.amount += 1
-                else:
-                    text_prefix += "You earned 2 additional points, because you were very fast!"
-                    team.amount += 2
-                db.commit()
-            db.close()
-
-        await query.message.edit_text(text_prefix)
-        await query.message.edit_reply_markup(solved_quiz_kb)
-        await state.finish()
-    except Exception as e:
-        print(e)
-        db.close()
+    await query.message.edit_text(text_prefix)
+    await query.message.edit_reply_markup(solved_quiz_kb)
+    await state.finish()

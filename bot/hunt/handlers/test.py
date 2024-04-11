@@ -32,7 +32,6 @@ async def clear_user(message: Message, state: FSMContext):
         for user in users:
             db.delete(user)
         db.commit()
-    db.close()
     await message.answer("Cleared")
 
 
@@ -46,7 +45,6 @@ async def clear_team(message: Message, state: FSMContext):
         for team in teams:
             db.delete(team)
         db.commit()
-    db.close()
     await message.answer("Cleared")
 
 
@@ -61,6 +59,5 @@ async def test(message: Message, state: FSMContext):
             task = Task(name="Special Secret " + str(i), description="Special Secret...", type=type, image=None, flag=flag, amount=300)
             db.add(task)
         db.commit()
-    db.close()
 
 
