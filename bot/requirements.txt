@@ -1,0 +1,16 @@
+aiogram==2.22.1
+alembic==1.8.1
+APScheduler==3.9.1
+english_words==1.1.0
+pydantic==1.9.1
+python-dotenv==0.21.1
+singleton_decorator==1.0.0
+SQLAlchemy==1.4.39
+aiohttp==3.8.6
+psycopg2==2.9.9
+gunicorn==21.2.0
+pymongo
+motor
+pandas
+psycopg2
+openpyxl

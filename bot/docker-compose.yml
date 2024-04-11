@@ -1,0 +1,43 @@
+services:
+  storage:
+    container_name: 'scavenger_hunt_storage'
+    image: 'mongo:latest'
+    restart: always
+    ports:
+      - '27017:27017'
+    networks:
+      scavenger-hunt:
+        aliases:
+          - mongo
+
+  bot:
+    restart: always
+    build: .
+    command: /app/entrypoint.sh
+    environment:
+      - DATABASE_URL=postgresql://postgres:hFwI/MvZJJ[Y2WBq£1,(BN8\[-8Yu5^@45.95.234.124:9856/postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=hFwI/MvZJJ[Y2WBq£1,(BN8\[-8Yu5^
+      - POSTGRES_HOST=45.95.234.124
+      - POSTGRES_PORT=9856
+      - MONGO_DB=scavenger_hunt_storage
+      - MONGO_USER=user
+      - MONGO_PASSWORD=password
+      - MONGO_HOST=mongo
+      - MONGO_PORT=27017
+      - BOT_TOKEN=5208812086:AAEZYEDe6j3Xc1hPzwCREoqhwGjU54nor_I
+#      - BOT_TOKEN=6032882651:AAFzu6WJ1Xhd9f6aiHF5kP8LZlGUe6eFFxI
+      - ADMIN_TOKEN=THEISM_ALSOP_SPONSOR_FALSIFY_CASEWORK_PENDANT_IVORY_MAURITIUS_AMARILLO_BRAHMAPUTRA
+      - BOT_WEBHOOK_URL=scavenger-hunt-bot.elephahealth.com
+      - BOT_PORT=8000
+    ports:
+      - "6891:8000"
+    networks:
+      scavenger-hunt:
+        aliases:
+          - bot
+
+
+networks:
+  scavenger-hunt:
