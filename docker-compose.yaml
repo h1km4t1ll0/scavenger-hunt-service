@@ -62,11 +62,16 @@ services:
     environment:
 #      - DATABASE_URL=postgresql://postgres:hFwI/MvZJJ[Y2WBq£1,(BN8\[-8Yu5^@45.95.234.124:9856/postgres
       - DATABASE_URL=postgresql://postgres:hFwI/MvZJJ[Y2WBq£1,(BN8\[-8Yu5^@database-scavenger-hunt/postgres
+      #- POSTGRES_DB=postgres
+      #- POSTGRES_USER=postgres
+      #- POSTGRES_PASSWORD=hFwI/MvZJJ[Y2WBq£1,(BN8\[-8Yu5^
+      #- POSTGRES_HOST=45.95.234.124
+      #- POSTGRES_PORT=9856
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=hFwI/MvZJJ[Y2WBq£1,(BN8\[-8Yu5^
-      - POSTGRES_HOST=45.95.234.124
-      - POSTGRES_PORT=9856
+      - POSTGRES_HOST=database-scavenger-hunt
+      - POSTGRES_PORT=5432
       - MONGO_DB=scavenger_hunt_storage
       - MONGO_USER=user
       - MONGO_PASSWORD=password
