@@ -161,7 +161,6 @@ async def leave_team(message: Message, state: FSMContext):
                 return await send_answer(db, message.chat.id, "leave_team_not_in_team")
             if result == TeamOperationResult.LEFT:
                 return await send_answer(db, message.chat.id, "leave_team_left")
-            db.close()
     except Exception as e:
         print(e)
         db.close()
