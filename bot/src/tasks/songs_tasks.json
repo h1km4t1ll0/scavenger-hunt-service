@@ -1,0 +1,92 @@
+[
+    {
+        "name": "Ryan Gosling - I'm just Ken",
+        "description": "Summarize a song in a creative way\nhttps://youtu.be/RIHExGaxfPE?si=SE__2NBOMrgXfyCz",
+        "type": "song summarization",
+        "flag": "1_song",
+        "with_manager": 1,
+        "amount": 2,
+        "usage": 1000
+    },
+    {
+        "name": "Imagine Dragons - It's ok",
+        "description": "Summarize a song in a creative way\nhttps://youtu.be/W_yRODJ6kfc?si=YDN0gNCRuc35nGYi",
+        "type": "song summarization",
+        "flag": "2_song",
+        "with_manager": 1,
+        "amount": 2,
+        "usage": 1000
+    },
+    {
+        "name": "NF - HOPE",
+        "description": "Summarize a song in a creative way\nhttps://youtu.be/xvFcp16NWjo?si=IwkR61DzA6KUF1bM",
+        "type": "song summarization",
+        "flag": "3_song",
+        "with_manager": 1,
+        "amount": 2,
+        "usage": 1000
+    },
+    {
+        "name": "Steve Angello - Dopamine",
+        "description": "Summarize a song in a creative way\nhttps://youtu.be/PF8vAhRMUhQ?si=3FG1rX-uApPVREmr",
+        "type": "song summarization",
+        "flag": "4_song",
+        "with_manager": 1,
+        "amount": 2,
+        "usage": 1000
+    },
+    {
+        "name": "Linkin Park - In the end",
+        "description": "Summarize a song in a creative way\nhttps://youtu.be/eVTXPUF4Oz4?si=SkIcWbsDV9eGjl9c",
+        "type": "song summarization",
+        "flag": "5_song",
+        "with_manager": 1,
+        "amount": 2,
+        "usage": 1000
+    },
+    {
+        "name": "My Chemical Romance - Welcome To The Black Parade",
+        "description": "Summarize a song in a creative way\nhttps://youtu.be/RRKJiM9Njr8?si=hL5zOZ8JZLK53vUb",
+        "type": "song summarization",
+        "flag": "6_song",
+        "with_manager": 1,
+        "amount": 2,
+        "usage": 1000
+    },
+    {
+        "name": "Scorpions - Wind Of Change",
+        "description": "Summarize a song in a creative way\nhttps://youtu.be/n4RjJKxsamQ?si=t4QMl8SkfJiZi8PC",
+        "type": "song summarization",
+        "flag": "7_song",
+        "with_manager": 1,
+        "amount": 2,
+        "usage": 1000
+    },
+    {
+        "name": "Kodaline - Follow Your Fire",
+        "description": "Summarize a song in a creative way\nhttps://youtu.be/i9wBXC3aZ_I?si=lV1U8h5zBrl2GTB9",
+        "type": "song summarization",
+        "flag": "8_song",
+        "with_manager": 1,
+        "amount": 2,
+        "usage": 1000
+    },
+    {
+        "name": "Eminem - Mockingbird",
+        "description": "Summarize a song in a creative way\nhttps://youtu.be/S9bCLPwzSC0?si=kYecHmNoRgzcAqe5",
+        "type": "song summarization",
+        "flag": "9_song",
+        "with_manager": 1,
+        "amount": 2,
+        "usage": 1000
+    },
+    {
+        "name": "Daft Punk - Around The World",
+        "description": "Summarize a song in a creative way\nhttps://youtu.be/K0HSD_i2DvA?si=gPEOQbz-q_h0Hle3",
+        "type": "song summarization",
+        "flag": "10_song",
+        "with_manager": 1,
+        "amount": 2,
+        "usage": 1000
+    }
+]

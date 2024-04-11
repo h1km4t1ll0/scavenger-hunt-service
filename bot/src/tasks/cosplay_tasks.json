@@ -1,0 +1,62 @@
+[
+    {
+        "name": "Dune",
+        "description": "Make a photo and send it to us",
+        "type": "cosplay",
+        "flag": "1_cosplay",
+        "with_manager": 1,
+        "image" : "dune.jpg",
+        "amount": 3,
+        "usage": 1000
+    },
+    {
+        "name": "Barbie",
+        "description": "Make a photo and send it to us",
+        "type": "cosplay",
+        "flag": "2_cosplay",
+        "with_manager": 1,
+        "image": "barbie.jpg",
+        "amount": 3,
+        "usage": 1000
+    },
+    {
+        "name": "Mr. Robot",
+        "description": "Make a photo and send it to us",
+        "type": "cosplay",
+        "flag": "3_cosplay",
+        "with_manager": 1,
+        "image": "mr_robot.jpg",
+        "amount": 3,
+        "usage": 1000
+    },
+    {
+        "name": "Oppenheimer",
+        "description": "Make a photo and send it to us",
+        "type": "cosplay",
+        "flag": "4_cosplay",
+        "with_manager": 1,
+        "image": "oppenheimer.jpg",
+        "amount": 3,
+        "usage": 1000
+    },
+    {
+        "name": "One Punch man",
+        "description": "Make a photo and send it to us",
+        "type": "cosplay",
+        "flag": "5_cosplay",
+        "with_manager": 1,
+        "image": "anime.jpg",
+        "amount": 3,
+        "usage": 1000
+    },
+    {
+        "name": "Ninja turtles",
+        "description": "Make a photo and send it to us",
+        "type": "cosplay",
+        "flag": "6_cosplay",
+        "with_manager": 1,
+        "image": "turtles.jpg",
+        "amount": 3,
+        "usage": 1000
+    }
+]

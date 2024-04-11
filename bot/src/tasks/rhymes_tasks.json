@@ -1,0 +1,272 @@
+[
+    {
+        "name": "hat (easy)",
+        "description": "Take a photo with the item that rhymes the word 'hat'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_1",
+        "with_manager": 1,
+        "amount": 1,
+        "usage": 1
+    },
+    {
+        "name": "book (easy)",
+        "description": "Take a photo with the item that rhymes the word 'book'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_2",
+        "with_manager": 1,
+        "amount": 1,
+        "usage": 1
+    },
+    {
+        "name": "chair (easy)",
+        "description": "Take a photo with the item that rhymes the word 'chair'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_3",
+        "with_manager": 1,
+        "amount": 1,
+        "usage": 1
+    },
+    {
+        "name": "door (easy)",
+        "description": "Take a photo with the item that rhymes the word 'door'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_4",
+        "with_manager": 1,
+        "amount": 1,
+        "usage": 1
+    },
+    {
+        "name": "pen (easy)",
+        "description": "Take a photo with the item that rhymes the word 'pen'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_5",
+        "with_manager": 1,
+        "amount": 1,
+        "usage": 1
+    },
+    {
+        "name": "clock (easy)",
+        "description": "Take a photo with the item that rhymes the word 'clock'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_6",
+        "with_manager": 1,
+        "amount": 1,
+        "usage": 1
+    },
+    {
+        "name": "tree (easy)",
+        "description": "Take a photo with the item that rhymes the word 'tree'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_7",
+        "with_manager": 1,
+        "amount": 1,
+        "usage": 1
+    },
+    {
+        "name": "shoe (easy)",
+        "description": "Take a photo with the item that rhymes the word 'shoe'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_8",
+        "with_manager": 1,
+        "amount": 1,
+        "usage": 1
+    },
+    {
+        "name": "cup (easy)",
+        "description": "Take a photo with the item that rhymes the word 'cup'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_9",
+        "with_manager": 1,
+        "amount": 1,
+        "usage": 1
+    },
+    {
+        "name": "lamp (easy)",
+        "description": "Take a photo with the item that rhymes the word 'lamp'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_10",
+        "with_manager": 1,
+        "amount": 1,
+        "usage": 1
+    },
+    {
+        "name": "bag (easy)",
+        "description": "Take a photo with the item that rhymes the word 'bag'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_11",
+        "with_manager": 1,
+        "amount": 1,
+        "usage": 1
+    },
+    {
+        "name": "key (easy)",
+        "description": "Take a photo with the item that rhymes the word 'key'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_12",
+        "with_manager": 1,
+        "amount": 1,
+        "usage": 1
+    },
+    {
+        "name": "phone (easy)",
+        "description": "Take a photo with the item that rhymes the word 'phone'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_13",
+        "with_manager": 1,
+        "amount": 1,
+        "usage": 1
+    },
+    {
+        "name": "glass (easy)",
+        "description": "Take a photo with the item that rhymes the word 'glass'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_14",
+        "with_manager": 1,
+        "amount": 1,
+        "usage": 1
+    },
+    {
+        "name": "plate (easy)",
+        "description": "Take a photo with the item that rhymes the word 'plate'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_15",
+        "with_manager": 1,
+        "amount": 1,
+        "usage": 1
+    },
+    {
+        "name": "window (medium)",
+        "description": "Take a photo with the item that rhymes the word 'window'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_16",
+        "with_manager": 1,
+        "amount": 3,
+        "usage": 1
+    },
+    {
+        "name": "table (medium)",
+        "description": "Take a photo with the item that rhymes the word 'table'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_17",
+        "with_manager": 1,
+        "amount": 3,
+        "usage": 1
+    },
+    {
+        "name": "mirror (medium)",
+        "description": "Take a photo with the item that rhymes the word 'mirror'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_18",
+        "with_manager": 1,
+        "amount": 3,
+        "usage": 1
+    },
+    {
+        "name": "picture (medium)",
+        "description": "Take a photo with the item that rhymes the word 'picture'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_19",
+        "with_manager": 1,
+        "amount": 3,
+        "usage": 1
+    },
+    {
+        "name": "flower (medium)",
+        "description": "Take a photo with the item that rhymes the word 'flower'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_20",
+        "with_manager": 1,
+        "amount": 3,
+        "usage": 1
+    },
+    {
+        "name": "basket (medium)",
+        "description": "Take a photo with the item that rhymes the word 'basket'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_21",
+        "with_manager": 1,
+        "amount": 3,
+        "usage": 1
+    },
+    {
+        "name": "pillow (medium)",
+        "description": "Take a photo with the item that rhymes the word 'pillow'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_22",
+        "with_manager": 1,
+        "amount": 3,
+        "usage": 1
+    },
+    {
+        "name": "candle (medium)",
+        "description": "Take a photo with the item that rhymes the word 'candle'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_23",
+        "with_manager": 1,
+        "amount": 3,
+        "usage": 1
+    },
+    {
+        "name": "marker (medium)",
+        "description": "Take a photo with the item that rhymes the word 'marker'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_24",
+        "with_manager": 1,
+        "amount": 3,
+        "usage": 1
+    },
+    {
+        "name": "bottle (medium)",
+        "description": "Take a photo with the item that rhymes the word 'bottle'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_25",
+        "with_manager": 1,
+        "amount": 3,
+        "usage": 1
+    },
+    {
+        "name": "chandlier (hard)",
+        "description": "Take a photo with the item that rhymes the word 'chandlier'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_26",
+        "with_manager": 1,
+        "amount": 5,
+        "usage": 1
+    },
+    {
+        "name": "sculpture (hard)",
+        "description": "Take a photo with the item that rhymes the word 'sculpture'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_27",
+        "with_manager": 1,
+        "amount": 5,
+        "usage": 1
+    },
+    {
+        "name": "fountain (hard)",
+        "description": "Take a photo with the item that rhymes the word 'fountain'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_28",
+        "with_manager": 1,
+        "amount": 5,
+        "usage": 1
+    },
+    {
+        "name": "tapestry (hard)",
+        "description": "Take a photo with the item that rhymes the word 'tapestry'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_29",
+        "with_manager": 1,
+        "amount": 5,
+        "usage": 1
+    },
+    {
+        "name": "laboratory (hard)",
+        "description": "Take a photo with the item that rhymes the word 'laboratory'. Please, send the photo AND the name of the item.",
+        "type": "rhymes",
+        "flag": "rt_30",
+        "with_manager": 1,
+        "amount": 5,
+        "usage": 1
+    }
+]

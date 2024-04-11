@@ -1,0 +1,56 @@
+[
+    {
+        "name": "Poster creation",
+        "description": "Design a poster as instructed by Charintseva Maria Viktorovna - room 1156",
+        "type": "offline",
+        "flag": "1_offline",
+        "with_manager": 0,
+        "amount": 10,
+        "usage": 1000
+    },
+    {
+        "name": "Storytelling",
+        "description": "Create an original story to score points.\nYou can complete this task with Lankina Daria Sergeevna – room 1155",
+        "type": "offline",
+        "flag": "2_offline",
+        "with_manager": 0,
+        "amount": 10,
+        "usage": 1000
+    },
+    {
+        "name": "Outdoor communication challenge",
+        "description": "Make a video interviewing a passer-by concerning the history of Academgorodok (3-5 minutes)",
+        "type": "offline",
+        "flag": "3_offline",
+        "with_manager": 1,
+        "amount": 10,
+        "usage": 1000
+    },
+    {
+        "name": "Lights! Camera! Action!",
+        "description": "Create a video up to 1 minute long showcasing \"my way to NSU\"",
+        "type": "offline",
+        "flag": "4_online",
+        "with_manager": 1,
+        "amount": 10,
+        "usage": 1000
+    },
+    {
+        "name": "Group photo",
+        "description": "Take a photo of your entire team where everyone is doing a unique type of physical activity)))",
+        "type": "offline",
+        "flag": "5_online",
+        "with_manager": 1,
+        "amount": 5,
+        "usage": 1000
+    },
+    {
+        "name": "Find an object",
+        "description": "Find an object starting with H letter and bring it to Anna Grigorievna Serikova – room 1154. Also there you can find some riddles to get additional points.",
+        "type": "offline",
+        "flag": "6_offline",
+        "with_manager": 0,
+        "amount": 3,
+        "usage": 1000
+    }
+]

@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Invent a word",
+        "description": "Create a new word and explain it",
+        "type": "online",
+        "flag": "1_online",
+        "with_manager": 1,
+        "amount": 3,
+        "usage": 1000
+    },
+    {
+        "name": "Create a meme",
+        "description": "Create your own meme and send us.\nIt can be a meme about your group, faculty, or... We don't know, just use your imagination and humor",
+        "type": "online",
+        "flag": "2_online",
+        "with_manager": 1,
+        "amount": 6,
+        "usage": 1000
+    }
+]
