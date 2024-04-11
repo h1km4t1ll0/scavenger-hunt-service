@@ -82,29 +82,37 @@ class CreateTeamStates(StatesGroup):
 @user_exists
 @admin_method
 async def create_team_start(message: Message, state: FSMContext):
-    await state.finish()
-    with get_db() as db:
-        # if TeamManager().check_user_in_team(db, message.chat.id):
-        #     return await send_answer(db, message.chat.id, "create_team_already_in_team")
-        await send_answer(db, message.chat.id, "create_team_start")
-    await CreateTeamStates.waiting_name.set()
-    db.close()
+    try:
+        await state.finish()
+        with get_db() as db:
+            # if TeamManager().check_user_in_team(db, message.chat.id):
+            #     return await send_answer(db, message.chat.id, "create_team_already_in_team")
+            await send_answer(db, message.chat.id, "create_team_start")
+        await CreateTeamStates.waiting_name.set()
+        db.close()
+    except Exception as e:
+        print(e)
+        db.close()
 
 
 async def create_team_read_name(message: Message, state: FSMContext):
-    name = message.text
-    await state.finish()
-    with get_db() as db:
-        result, token = await TeamManager().create_team(db, message.chat.id, name)
-        # if result == TeamOperationResult.ALREADY_IN_TEAM:
-        #     return await send_answer(db, message.chat.id, "create_team_already_in_team")
-        if result == TeamOperationResult.NAME_TAKEN:
-            return await send_answer(db, message.chat.id, "create_team_name_is_taken")
-        elif result == TeamOperationResult.CREATED:
-            await send_answer(db, message.chat.id, "create_team_created")
-            return await message.answer(
-                f"<span class='tg-spoiler'>{token}</span>", parse_mode=ParseMode.HTML
-            )
+    try:
+        name = message.text
+        await state.finish()
+        with get_db() as db:
+            result, token = await TeamManager().create_team(db, message.chat.id, name)
+            # if result == TeamOperationResult.ALREADY_IN_TEAM:
+            #     return await send_answer(db, message.chat.id, "create_team_already_in_team")
+            if result == TeamOperationResult.NAME_TAKEN:
+                return await send_answer(db, message.chat.id, "create_team_name_is_taken")
+            elif result == TeamOperationResult.CREATED:
+                await send_answer(db, message.chat.id, "create_team_created")
+                return await message.answer(
+                    f"<span class='tg-spoiler'>{token}</span>", parse_mode=ParseMode.HTML
+                )
+            db.close()
+    except Exception as e:
+        print(e)
         db.close()
 
 
@@ -114,75 +122,95 @@ class JoinTeamStates(StatesGroup):
 
 @user_exists
 async def join_team_start(message: Message, state: FSMContext):
-    await state.finish()
-    with get_db() as db:
-        if TeamManager().check_user_in_team(db, message.chat.id):
-            return await send_answer(db, message.chat.id, "join_team_already_in_team")
-        await send_answer(db, message.chat.id, "join_team_start")
+    try:
+        await state.finish()
+        with get_db() as db:
+            if TeamManager().check_user_in_team(db, message.chat.id):
+                return await send_answer(db, message.chat.id, "join_team_already_in_team")
+            await send_answer(db, message.chat.id, "join_team_start")
+            db.close()
+        await JoinTeamStates.waiting_token.set()
+    except Exception as e:
+        print(e)
         db.close()
-    await JoinTeamStates.waiting_token.set()
 
 
 async def join_team_read_token(message: Message, state: FSMContext):
-    token = message.text
-    await state.finish()
-    with get_db() as db:
-        result = await TeamManager().join_team(db, message.chat.id, token)
-        if result == TeamOperationResult.ALREADY_IN_TEAM:
-            return await send_answer(db, message.chat.id, "join_team_already_in_team")
-        elif result == TeamOperationResult.INVALID_TOKEN:
-            return await send_answer(db, message.chat.id, "join_team_token_invalid")
-        elif result == TeamOperationResult.FULL_TEAM:
-            return await send_answer(db, message.chat.id, "join_team_full_team")
-        elif result == TeamOperationResult.JOINED:
-            return await send_answer(db, message.chat.id, "join_team_joined")
+    try:
+        token = message.text
+        await state.finish()
+        with get_db() as db:
+            result = await TeamManager().join_team(db, message.chat.id, token)
+            if result == TeamOperationResult.ALREADY_IN_TEAM:
+                return await send_answer(db, message.chat.id, "join_team_already_in_team")
+            elif result == TeamOperationResult.INVALID_TOKEN:
+                return await send_answer(db, message.chat.id, "join_team_token_invalid")
+            elif result == TeamOperationResult.FULL_TEAM:
+                return await send_answer(db, message.chat.id, "join_team_full_team")
+            elif result == TeamOperationResult.JOINED:
+                return await send_answer(db, message.chat.id, "join_team_joined")
+            db.close()
+    except Exception as e:
+        print(e)
         db.close()
 
 
 @user_exists
 async def leave_team(message: Message, state: FSMContext):
-    await state.finish()
-    with get_db() as db:
-        result = await TeamManager().leave_team(db, message.chat.id)
-        if result == TeamOperationResult.NOT_IN_TEAM:
-            return await send_answer(db, message.chat.id, "leave_team_not_in_team")
-        if result == TeamOperationResult.LEFT:
-            return await send_answer(db, message.chat.id, "leave_team_left")
+    try:
+        await state.finish()
+        with get_db() as db:
+            result = await TeamManager().leave_team(db, message.chat.id)
+            if result == TeamOperationResult.NOT_IN_TEAM:
+                return await send_answer(db, message.chat.id, "leave_team_not_in_team")
+            if result == TeamOperationResult.LEFT:
+                return await send_answer(db, message.chat.id, "leave_team_left")
+            db.close()
+    except Exception as e:
+        print(e)
         db.close()
 
 
 @user_exists
 @user_in_team
 async def team_info(message: Message, state: FSMContext):
-    await state.finish()
-    with get_db() as db:
-        team: Team = TeamManager().team(db, message.chat.id)
-        users: list[User] = User.get_all(db, team_id=team.id)
+    try:
+        await state.finish()
+        with get_db() as db:
+            team: Team = TeamManager().team(db, message.chat.id)
+            users: list[User] = User.get_all(db, team_id=team.id)
+            db.close()
+        info = (
+            f"❗ <b>{team.name}</b> ❗\n"
+            f"💰 You have <i>{team.amount} points</i>\n\n"
+            f"{team.member_number} hunters:\n"
+        )
+        for user in users:
+            info += f"▪ {user.full_name} @{user.username}\n"
+        await message.answer(info, parse_mode=ParseMode.HTML)
+    except Exception as e:
+        print(e)
         db.close()
-    info = (
-        f"❗ <b>{team.name}</b> ❗\n"
-        f"💰 You have <i>{team.amount} points</i>\n\n"
-        f"{team.member_number} hunters:\n"
-    )
-    for user in users:
-        info += f"▪ {user.full_name} @{user.username}\n"
-    await message.answer(info, parse_mode=ParseMode.HTML)
 
 
 async def leaderboard(message: Message, state: FSMContext):
-    await state.finish()
-    with get_db() as db:
-        teams: list[Team] = db.query(Team).all()
-    db.close()
-    teams = teams if teams is not None else []
-    teams.sort()
-    teams.reverse()
+    try:
+        await state.finish()
+        with get_db() as db:
+            teams: list[Team] = db.query(Team).all()
+        db.close()
+        teams = teams if teams is not None else []
+        teams.sort()
+        teams.reverse()
 
-    board = f"<b><i>Scavenger Hunt scoreboard</i></b>\n\n"
-    board += "<pre>"
-    for team in teams:
-        if team.visible:
-            score = number_to_emoji(team.amount)
-            board += f"{score}" + " | " + f"{team.name}\n"
-    board += "</pre>"
-    await message.answer(board, parse_mode=ParseMode.HTML)
+        board = f"<b><i>Scavenger Hunt scoreboard</i></b>\n\n"
+        board += "<pre>"
+        for team in teams:
+            if team.visible:
+                score = number_to_emoji(team.amount)
+                board += f"{score}" + " | " + f"{team.name}\n"
+        board += "</pre>"
+        await message.answer(board, parse_mode=ParseMode.HTML)
+    except Exception as e:
+        print(e)
+        db.close()

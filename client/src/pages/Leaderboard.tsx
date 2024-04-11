@@ -20,6 +20,8 @@ export const LeaderboardPage = () => {
             return;
         }
 
+
+        leaderboardData.data.sort()
         setErr(false);
         setLeaderboard(leaderboardData.data);
     }, []);

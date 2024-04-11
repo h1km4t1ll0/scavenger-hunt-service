@@ -693,20 +693,27 @@ async def solution_mark_unchecked(query: CallbackQuery, state: FSMContext):
 @user_exists
 @admin_method
 async def get_invite_tokens(message: Message, state: FSMContext):
-    await state.finish()
-    text = "Invite tokens:\n\n"
-    with get_db() as db:
-        teams: List[Team] = db.query(Team).all()
-        teams.sort(key=lambda t: t.name)
-        for team in teams:
-            text += f"{hbold(team.name)}: {hspoiler(team.token)}\n"
-    db.close()
-    await message.answer(text, parse_mode=ParseMode.HTML)
+    try:
+        await state.finish()
+        text = "Invite tokens:\n\n"
+        with get_db() as db:
+            teams: List[Team] = db.query(Team).all()
+            teams.sort(key=lambda t: t.name)
+            for team in teams:
+                text += f"{hbold(team.name)}: {hspoiler(team.token)}\n"
+        db.close()
+        await message.answer(text, parse_mode=ParseMode.HTML)
+    except Exception as e:
+        print(e)
+        db.close()
 
 
 @user_exists
 @admin_method
 async def build_results_start(message: Message, state: FSMContext):
-    await state.finish()
-    name = build_results()
-    await message.answer_document(open(f'./results/{name}.xlsx', "rb"))
+    try:
+        await state.finish()
+        name = build_results()
+        await message.answer_document(open(f'./results/{name}.xlsx', "rb"))
+    except Exception as e:
+        print(e)

@@ -91,13 +91,20 @@ async def support(message: Message, state: FSMContext):
 
 @user_exists
 async def send_map(message: Message, state: FSMContext):
-    await state.finish()
-    with get_db() as db:
-        await send_answer(db, message.chat.id, "map")
-    db.close()
+    try:
+        await state.finish()
+        with get_db() as db:
+            await send_answer(db, message.chat.id, "map")
+        db.close()
+    except Exception as e:
+        print(e)
+        db.close()
 
 
 @user_exists
 async def rofl(message: Message, state: FSMContext):
-    await state.finish()
-    await message.answer(random.choice(replies["rofls"]))
+    try:
+        await state.finish()
+        await message.answer(random.choice(replies["rofls"]))
+    except Exception as e:
+        print(e)

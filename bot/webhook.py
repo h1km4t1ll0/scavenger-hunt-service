@@ -23,7 +23,7 @@ async def on_startup(app):
     register_handlers_team(bot_holder.dp)
     register_handlers_task(bot_holder.dp)
     # register_handlers_casino(bot.dp)
-    register_handlers_test(bot_holder.dp)
+    # register_handlers_test(bot_holder.dp)
     register_handlers_quiz(bot_holder.dp)
     webhook = await bot_holder.bot.get_webhook_info()
 

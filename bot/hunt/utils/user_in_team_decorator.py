@@ -9,15 +9,19 @@ from hunt.utils import send_answer
 
 def user_in_team(func):
     async def wrapper(message: Message, state: FSMContext):
-        with get_db() as db:
-            db_user: User = db.query(User).where(User.chat_id == message.chat.id).first()
-            exists = db_user is not None
-            db.close()
-            if not exists:
-                return await send_answer(db, message.chat.id, "no_team_action")
-            if db_user.team_id is None:
-                return await send_answer(db, message.chat.id, "no_team_action")
+        try:
+            with get_db() as db:
+                db_user: User = db.query(User).where(User.chat_id == message.chat.id).first()
+                exists = db_user is not None
+                db.close()
+                if not exists:
+                    return await send_answer(db, message.chat.id, "no_team_action")
+                if db_user.team_id is None:
+                    return await send_answer(db, message.chat.id, "no_team_action")
 
-        return await func(message, state)
+            return await func(message, state)
+        except Exception as e:
+            print(e)
+            db.close()
 
     return wrapper
