@@ -138,7 +138,7 @@ async def admin_token(message: Message, state: FSMContext):
             return await message.answer("Токен - инвалид!")
         db_user.role = "admin"
         db.commit()
-    db.close()
+        db.close()
     await message.answer("Теперь ты админ")
     await state.finish()
 
@@ -283,7 +283,7 @@ async def remove_task(message: Message, state: FSMContext):
 
         db.delete(db_task)
         db.commit()
-    db.close()
+        db.close()
     await state.finish()
     await message.answer(f"Таска {name} удалена")
 
@@ -294,7 +294,7 @@ async def get_tasks(message: Message, state: FSMContext):
     await state.finish()
     with get_db() as db:
         db_tasks: [Task] = db.query(Task).all()
-    db.close()
+        db.close()
     bot: Bot = BotHolder().bot
     for task in db_tasks:
         ans = f"Имя: {task.name}\nОписание:\n{task.description}\nЦена: {task.amount}\nФлаг: {task.flag}\nКол-во использований: {task.usage}"

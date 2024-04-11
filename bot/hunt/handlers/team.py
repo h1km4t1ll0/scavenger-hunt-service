@@ -89,7 +89,6 @@ async def create_team_start(message: Message, state: FSMContext):
             #     return await send_answer(db, message.chat.id, "create_team_already_in_team")
             await send_answer(db, message.chat.id, "create_team_start")
         await CreateTeamStates.waiting_name.set()
-        db.close()
     except Exception as e:
         print(e)
         db.close()
@@ -110,7 +109,6 @@ async def create_team_read_name(message: Message, state: FSMContext):
                 return await message.answer(
                     f"<span class='tg-spoiler'>{token}</span>", parse_mode=ParseMode.HTML
                 )
-            db.close()
     except Exception as e:
         print(e)
         db.close()
@@ -128,7 +126,6 @@ async def join_team_start(message: Message, state: FSMContext):
             if TeamManager().check_user_in_team(db, message.chat.id):
                 return await send_answer(db, message.chat.id, "join_team_already_in_team")
             await send_answer(db, message.chat.id, "join_team_start")
-            db.close()
         await JoinTeamStates.waiting_token.set()
     except Exception as e:
         print(e)
@@ -149,7 +146,6 @@ async def join_team_read_token(message: Message, state: FSMContext):
                 return await send_answer(db, message.chat.id, "join_team_full_team")
             elif result == TeamOperationResult.JOINED:
                 return await send_answer(db, message.chat.id, "join_team_joined")
-            db.close()
     except Exception as e:
         print(e)
         db.close()
