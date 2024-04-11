@@ -7,10 +7,10 @@ from aiogram.dispatcher import Dispatcher
 from aiogram.dispatcher.webhook import get_new_configured_app
 from aiogram.types import ContentTypes
 
-from bot.hunt import BotHolder
-from bot.hunt.handlers import (register_handlers_common, register_handlers_admin, register_handlers_team,
+from hunt import BotHolder
+from hunt.handlers import (register_handlers_common, register_handlers_admin, register_handlers_team,
                            register_handlers_task, register_handlers_test, register_handlers_quiz)
-from bot.hunt.utils import set_commands
+from hunt.utils import set_commands
 
 bot_holder = BotHolder()
 webhook_url = f"https://{bot_holder.settings.BOT_WEBHOOK_URL}/{bot_holder.settings.BOT_TOKEN}"
