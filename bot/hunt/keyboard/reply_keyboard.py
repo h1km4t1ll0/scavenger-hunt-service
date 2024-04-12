@@ -12,6 +12,7 @@ leaderboard_btn = KeyboardButton("🏆 Scoreboard")
 tasks_btn = KeyboardButton("✔ Tasks")
 flag_btn = KeyboardButton("🤘 Flag")
 casino_btn = KeyboardButton("🔞 Casino")
+give_points_btn = KeyboardButton("💯 Give points")
 
 
 start_markup = (
@@ -26,4 +27,10 @@ team_markup = (
     .row(tasks_btn, flag_btn)
     .add(leaderboard_btn)
     .row(info_btn, support_btn)
+)
+
+admin_markup = (
+    ReplyKeyboardMarkup(resize_keyboard=True)
+    .add(give_points_btn)
+    .add(leaderboard_btn)
 )

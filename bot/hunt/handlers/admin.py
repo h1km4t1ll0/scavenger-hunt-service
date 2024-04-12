@@ -22,6 +22,7 @@ from hunt.config import get_settings
 from hunt.db import get_db
 from hunt.db.models import Task, Team, User, Results, SolvedTasks
 from hunt.keyboard import manager_checked_kb, manager_check_kb
+from hunt.keyboard.reply_keyboard import admin_markup
 from hunt.utils import admin_method, notify_team_by_id, user_exists, notify_admins, build_results
 
 
@@ -33,6 +34,15 @@ def register_handlers_admin(dp: Dispatcher):
     dp.register_message_handler(get_teams, commands="get_teams", state="*")
 
     dp.register_message_handler(give_money_start, commands="give_points", state="*")
+    dp.register_message_handler(
+        give_money_start, Text(startswith="give points ", ignore_case=True), state="*"
+    )
+    dp.register_message_handler(
+        give_money_start, Text(endswith="give points", ignore_case=True), state="*"
+    )
+    dp.register_message_handler(
+        give_money_start, Text(equals="give points", ignore_case=True), state="*"
+    )
     dp.register_message_handler(give_money_read_team, state=GiveMoneyState.waiting_team)
     dp.register_message_handler(give_money_read_task, state=GiveMoneyState.waiting_task)
     dp.register_message_handler(
@@ -416,7 +426,7 @@ async def give_money_read_amount(message: Message, state: FSMContext):
         await bot.edit_message_text(f"{solution_message_text}\nGiven: {amount}", message.chat.id, solution_message_id)
         await bot.edit_message_reply_markup(message.chat.id, solution_message_id,
                                             reply_markup=manager_checked_kb(team_name, task_name))
-    await message.answer(f"{amount} points was given to {team_name}")
+    await message.answer(f"{amount} points was given to {team_name}", reply_markup=admin_markup)
     await state.finish()
 
 
