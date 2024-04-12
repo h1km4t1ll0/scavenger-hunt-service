@@ -374,9 +374,9 @@ async def give_money_read_task(message: Message, state: FSMContext):
 
 async def give_money_from_solution_callback(query: CallbackQuery, state: FSMContext):
     team_name = query.data.split("_")[-2]
-    # task_name = query.data.split("_")[-1]
-    with get_db() as db:
-        task_name = db.query(Task).where(Task.id == query.data.split("_")[-1]).first().name
+    task_name = query.data.split("_")[-1]
+    # with get_db() as db:
+    #     task_name = db.query(Task).where(Task.id == query.data.split("_")[-1]).first().name
     await state.update_data(team_name=team_name, task_name=task_name)
     # await query.answer("Enter amount (might be negative)")
     await query.message.answer("Enter amount (might be negative)")

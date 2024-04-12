@@ -228,7 +228,7 @@ async def solve_task_read_message(message: Message, state: FSMContext):
         bot: Bot = BotHolder().bot
         try:
             await message.forward(task.manager_id)
-            await bot.send_message(task.manager_id, manager_text, reply_markup=manager_check_kb(team.name, task.id))
+            await bot.send_message(task.manager_id, manager_text, reply_markup=manager_check_kb(team.name, task.name))
             task.usage -= 1
             db.commit()
         except:
