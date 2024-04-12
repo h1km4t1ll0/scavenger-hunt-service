@@ -384,19 +384,24 @@ async def give_money_from_solution_callback(query: CallbackQuery, state: FSMCont
 
 
 async def give_money_read_amount(message: Message, state: FSMContext):
-    amount = int(message.text)
+    try:
+        amount = int(message.text)
+    except Exception as e:
+        await state.finish()
+        return await message.answer("Wrong amount", reply_markup=admin_markup)
+
     with get_db() as db:
         team_name = (await state.get_data())["team_name"]
         team: Team = db.query(Team).where(Team.name == team_name).first()
         if team is None:
             await state.finish()
-            return await message.answer("No such team")
+            return await message.answer("No such team", reply_markup=admin_markup)
 
         task_name = (await state.get_data())["task_name"]
         task: Task = db.query(Task).where(Task.name == task_name).first()
         if task is None:
             await state.finish()
-            return await message.answer("No such task")
+            return await message.answer("No such task", reply_markup=admin_markup)
 
         Results.write(db, team.id, task.id, amount)
         try:
