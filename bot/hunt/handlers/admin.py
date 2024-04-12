@@ -386,6 +386,9 @@ async def give_money_from_solution_callback(query: CallbackQuery, state: FSMCont
 async def give_money_read_amount(message: Message, state: FSMContext):
     try:
         amount = int(message.text)
+        if abs(amount) > 1000:
+            await state.finish()
+            return await message.answer("Wrong amount", reply_markup=admin_markup)
     except Exception as e:
         await state.finish()
         return await message.answer("Wrong amount", reply_markup=admin_markup)
