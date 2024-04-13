@@ -42,7 +42,7 @@ replies = {
                     "🎯️ Farm <b>points</b>! There are several ways to do this\n\n"
                     "📝️ Use <b>Tasks</b> button or <b>/tasks</b> command to get information about competitions"
                     " which you can get points for\n"
-                    "📊️ Also, you can track the other teams activity by using <b>Scoreboard</b> button "
+                    "📊️ Also, you can track the other teams activity here: leaderboard.elephahealth.com or by using <b>Scoreboard</b> button "
                     "or <b>/scoreboard</b> command. Let's try to get the first place!\n"
                     "❓ There are secrets inside the NSU with a special <b>FLAG</b> <i>(common string of english words)</i> "
                     "(like THIS_IS_A_FLAG) "
@@ -166,7 +166,7 @@ replies = {
     "tasks_types": "❗ <b>Tasks</b> ❗\n\n"
                    "<i>Here you can see 7 types of competitions:</i>\n"
                    "🟢️<b>In Real Life tasks</b>\n"
-                   "There is a description of offline tasks that is located somewhere in NSU\n"
+                   "There is a description of offline tasks that are located somewhere in NSU (or not)\n"
                    "🟢️<b>In Bot tasks</b>\n"
                    "Some tasks, that can be solved online in telegram, but we cannot define their actual type... "
                    "So yeah, they're just InBot tasks\n"
@@ -194,7 +194,7 @@ replies = {
                                  "Good luck!\n\n",
     "cosplay_tasks_description": "❕ <b>Cosplay tasks</b> ❕\n\n"
                                  "Repeat the scene from the movie and send the photo using <b>Solve</b> button\n"
-                                 "Manager will evaluate it and give you some points\n\n",
+                                 "Manager will evaluate it and give you some points (up to 3)\n\n",
     "secrets_tasks_description": "❕ <b>Secrets</b> ❕\n\n"
                                  "Secrets are like <i>easter eggs</i>, they might be anywhere! "
                                  "The Map will help you to find some of them. DO NOT DESTROY SECRETS! It is punishable\n\n"
